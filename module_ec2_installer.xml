@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ec2_installer" default="compile.module.ec2_installer">
+  <dirname property="module.ec2_installer.basedir" file="${ant.file.module_ec2_installer}"/>
+  
+  <property name="module.jdk.home.ec2_installer" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ec2_installer" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ec2_installer" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ec2_installer" value="${compiler.args}"/>
+  
+  <property name="ec2_installer.output.dir" value="${module.ec2_installer.basedir}/out/production/ec2_installer"/>
+  <property name="ec2_installer.testoutput.dir" value="${module.ec2_installer.basedir}/out/test/ec2_installer"/>
+  
+  <path id="ec2_installer.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ec2_installer.module.classpath">
+    <path refid="${module.jdk.classpath.ec2_installer}"/>
+    <fileset dir="${basedir}/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="ec2_installer.runtime.module.classpath">
+    <pathelement location="${ec2_installer.output.dir}"/>
+    <pathelement location="${ec2_installer.testoutput.dir}"/>
+    <fileset dir="${basedir}/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ec2_installer">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ec2_installer">
+    <patternset refid="excluded.from.module.ec2_installer"/>
+  </patternset>
+  
+  <path id="ec2_installer.module.sourcepath">
+    <dirset dir="${module.ec2_installer.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ec2_installer" depends="compile.module.ec2_installer.production,compile.module.ec2_installer.tests" description="Compile module ec2_installer"/>
+  
+  <target name="compile.module.ec2_installer.production" description="Compile module ec2_installer; production classes">
+    <mkdir dir="${ec2_installer.output.dir}"/>
+    <javac destdir="${ec2_installer.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ec2_installer}/javac">
+      <compilerarg line="${compiler.args.ec2_installer}"/>
+      <bootclasspath refid="ec2_installer.module.bootclasspath"/>
+      <classpath refid="ec2_installer.module.classpath"/>
+      <src refid="ec2_installer.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ec2_installer"/>
+    </javac>
+    
+    <copy todir="${ec2_installer.output.dir}">
+      <fileset dir="${module.ec2_installer.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ec2_installer.tests" depends="compile.module.ec2_installer.production" description="compile module ec2_installer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ec2_installer" description="cleanup module">
+    <delete dir="${ec2_installer.output.dir}"/>
+    <delete dir="${ec2_installer.testoutput.dir}"/>
+  </target>
+</project>
