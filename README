@@ -1,0 +1,5 @@
+EC2 Installer - By: Jon Whitcraft
+
+This will allow you pass a xml build file of sorts to any ec2 instance and have it run a set of commands when the ec2 instance first launched
+
+More Info Coming Soon.
